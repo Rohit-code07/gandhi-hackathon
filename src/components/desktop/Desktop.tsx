@@ -32,13 +32,13 @@ const DEFAULT_SHORTCUTS: DesktopShortcut[] = [
   { id: 'sc-cybercafe', appId: 'cyber-cafe', title: 'Cyber Cafe', icon: '/icons/cyber-cafe.svg', initialX: 192, initialY: 176, action: () => {} },
   { id: 'sc-download99', appId: 'download-99', title: '99% Download', icon: '/icons/download-99.svg', initialX: 192, initialY: 256, action: () => {} },
   { id: 'sc-secret', appId: 'file-explorer', title: 'Secret Folder', icon: '/icons/secret-folder.svg', initialX: 192, initialY: 336, action: () => {} },
-  { id: 'sc-pictures', appId: 'file-explorer', title: 'My Pictures', icon: '/icons/my-pictures.svg', initialX: 192, initialY: 416, action: () => {} },
+  { id: 'sc-pictures', appId: 'my-pictures', title: 'My Pictures', icon: '/icons/my-pictures.svg', initialX: 192, initialY: 416, action: () => {} },
   { id: 'sc-control', appId: 'control-panel', title: 'Control Panel', icon: '/icons/control-panel.svg', initialX: 192, initialY: 496, action: () => {} }
 ];
 
 export const Desktop: React.FC = () => {
   const { openWindow } = useWindowStore();
-  const { wallpaper, crtFilter, customWallpaperUrl } = useSettingsStore();
+  const { wallpaper, wallpaperFit, crtFilter, customWallpaperUrl } = useSettingsStore();
   const { createFile, createFolder, clipboard, pasteClipboard } = useFilesystemStore();
 
   const [shortcuts, setShortcuts] = useState<DesktopShortcut[]>(() => {
@@ -147,15 +147,30 @@ export const Desktop: React.FC = () => {
     }
   };
 
+  const getWallpaperSize = () => {
+    switch (wallpaperFit) {
+      case 'cover':
+        return 'cover';
+      case 'stretch':
+        return '100% 100%';
+      case 'contain':
+      default:
+        return 'contain';
+    }
+  };
+
+  const getDesktopBackgroundColor = () => {
+    if (wallpaper === 'matrix') return '#001100';
+    if (wallpaper === 'teal') return '#008080';
+    if (wallpaper === 'gandhi') return '#ffffff';
+    return '#000000';
+  };
+
   return (
     <div
       className="desktop-container"
       style={{
-        backgroundImage: getWallpaperBackground(),
-        backgroundColor: wallpaper === 'matrix' ? '#001100' : wallpaper === 'teal' ? '#008080' : '#000000',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundColor: getDesktopBackgroundColor(),
       }}
       onContextMenu={handleContextMenu}
       onClick={() => {
@@ -167,8 +182,16 @@ export const Desktop: React.FC = () => {
       {/* CRT Scanline Overlay */}
       {crtFilter && <div className="crt-overlay" />}
 
-      {/* Desktop Workspace */}
-      <div className="desktop-workspace">
+      {/* Desktop Workspace: Image sits in frame above the taskbar */}
+      <div
+        className="desktop-workspace"
+        style={{
+          backgroundImage: getWallpaperBackground(),
+          backgroundSize: getWallpaperSize(),
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         {shortcuts.map((sc) => (
           <DesktopIcon
             key={sc.id}

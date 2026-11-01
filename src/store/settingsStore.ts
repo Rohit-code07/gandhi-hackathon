@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
 export type WallpaperId = 'gandhi' | 'teal' | 'clouds' | 'space' | 'matrix' | 'mystery';
+export type WallpaperFit = 'contain' | 'cover' | 'stretch';
 export type ScreenSaverId = 'flying-windows' | 'pipes' | 'starfield' | 'matrix' | 'dvd' | 'none';
 
 interface SettingsStoreState {
   wallpaper: WallpaperId;
+  wallpaperFit: WallpaperFit;
   customWallpaperUrl: string | null;
   screensaver: ScreenSaverId;
   screensaverTimeout: number; // minutes
@@ -15,6 +17,7 @@ interface SettingsStoreState {
   unlockedWallpapers: string[];
 
   setWallpaper: (w: WallpaperId) => void;
+  setWallpaperFit: (f: WallpaperFit) => void;
   setCustomWallpaper: (url: string | null) => void;
   setScreensaver: (s: ScreenSaverId) => void;
   setScreensaverTimeout: (mins: number) => void;
@@ -31,10 +34,12 @@ export const useSettingsStore = create<SettingsStoreState>((set) => {
     ? {
         ...JSON.parse(saved),
         wallpaper: JSON.parse(saved).wallpaper === 'teal' ? 'gandhi' : (JSON.parse(saved).wallpaper || 'gandhi'),
+        wallpaperFit: JSON.parse(saved).wallpaperFit || 'contain',
         unlockedWallpapers: Array.from(new Set([...(JSON.parse(saved).unlockedWallpapers || []), 'gandhi', 'teal', 'clouds', 'space']))
       }
     : {
         wallpaper: 'gandhi',
+        wallpaperFit: 'contain',
         customWallpaperUrl: null,
         screensaver: 'flying-windows',
         screensaverTimeout: 3,
@@ -56,6 +61,12 @@ export const useSettingsStore = create<SettingsStoreState>((set) => {
         const next = { ...state, wallpaper, customWallpaperUrl: null };
         persist(next);
         return { wallpaper, customWallpaperUrl: null };
+      }),
+    setWallpaperFit: (wallpaperFit) =>
+      set((state) => {
+        const next = { ...state, wallpaperFit };
+        persist(next);
+        return { wallpaperFit };
       }),
     setCustomWallpaper: (customWallpaperUrl) =>
       set((state) => {

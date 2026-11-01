@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSettingsStore, WallpaperId, ScreenSaverId } from '../../store/settingsStore';
+import { useSettingsStore, WallpaperId, WallpaperFit, ScreenSaverId } from '../../store/settingsStore';
 import { useFilesystemStore } from '../../store/filesystemStore';
 import { useStoryStore } from '../../store/storyStore';
 
@@ -7,6 +7,8 @@ export const ControlPanelApp: React.FC = () => {
   const {
     wallpaper,
     setWallpaper,
+    wallpaperFit,
+    setWallpaperFit,
     screensaver,
     setScreensaver,
     screensaverTimeout,
@@ -105,6 +107,27 @@ export const ControlPanelApp: React.FC = () => {
             </fieldset>
 
             <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
+              <legend>Picture Display Mode</legend>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                {[
+                  { id: 'contain', label: 'Fit in Frame (Contain - Full Meme Visible)' },
+                  { id: 'cover', label: 'Fill Screen (Cover)' },
+                  { id: 'stretch', label: 'Stretch to Screen' }
+                ].map((mode) => (
+                  <label key={mode.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input
+                      type="radio"
+                      name="wallpaperFit"
+                      checked={wallpaperFit === mode.id}
+                      onChange={() => setWallpaperFit(mode.id as WallpaperFit)}
+                    />
+                    <span>{mode.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
               <legend>Visual Effects</legend>
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
                 <input
@@ -123,62 +146,82 @@ export const ControlPanelApp: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
               <legend>Screen Saver</legend>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                <span>Type:</span>
-                <select
-                  value={screensaver}
-                  onChange={(e) => setScreensaver(e.target.value as ScreenSaverId)}
-                  style={{ width: '180px' }}
-                >
-                  <option value="flying-windows">Flying Windows 98 Logos</option>
-                  <option value="pipes">3D Pipes Animation</option>
-                  <option value="starfield">Starfield Warp</option>
-                  <option value="matrix">Matrix Rain</option>
-                  <option value="dvd">Bouncing DVD Logo</option>
-                  <option value="none">(None)</option>
-                </select>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span>Wait:</span>
-                <input
-                  type="number"
-                  min="1"
-                  max="15"
-                  value={screensaverTimeout}
-                  onChange={(e) => setScreensaverTimeout(Number(e.target.value))}
-                  style={{ width: '50px' }}
-                />
-                <span>minutes of inactivity</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {[
+                  { id: 'flying-windows', label: '3D Flying Windows Logo' },
+                  { id: 'pipes', label: '3D OpenGL Pipes Simulator' },
+                  { id: 'starfield', label: 'Starfield Simulation (Hyperspace)' },
+                  { id: 'matrix', label: 'The Matrix Digital Rain' },
+                  { id: 'dvd', label: 'Bouncing DVD Video Logo' },
+                  { id: 'none', label: '(None)' }
+                ].map((ss) => (
+                  <label key={ss.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input
+                      type="radio"
+                      name="screensaver"
+                      checked={screensaver === ss.id}
+                      onChange={() => setScreensaver(ss.id as ScreenSaverId)}
+                    />
+                    <span>{ss.label}</span>
+                  </label>
+                ))}
               </div>
             </fieldset>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <label>Wait time before screensaver activation:</label>
+              <select
+                className="win-inset"
+                value={screensaverTimeout}
+                onChange={(e) => setScreensaverTimeout(Number(e.target.value))}
+                style={{ width: '80px' }}
+              >
+                <option value={1}>1 minute</option>
+                <option value={2}>2 minutes</option>
+                <option value={3}>3 minutes</option>
+                <option value={5}>5 minutes</option>
+                <option value={10}>10 minutes</option>
+              </select>
+            </div>
           </div>
         )}
 
-        {/* SOUNDS & NOTIFICATIONS TAB */}
+        {/* SOUNDS & ERRORS TAB */}
         {activeTab === 'sounds' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
-              <legend>Sound Effects</legend>
+              <legend>Audio Configuration</legend>
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', marginBottom: '8px' }}>
                 <input
                   type="checkbox"
                   checked={soundsEnabled}
                   onChange={(e) => setSoundsEnabled(e.target.checked)}
                 />
-                <span>Enable Windows 98 Chimes &amp; Audio Handshakes</span>
+                <span>Enable Sound Blaster 16 Synthesizer Audio</span>
               </label>
             </fieldset>
 
             <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
-              <legend>Random Events &amp; Quirks</legend>
+              <legend>Random Windows 98 Crashes &amp; Errors</legend>
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={randomErrorsEnabled}
                   onChange={(e) => setRandomErrorsEnabled(e.target.checked)}
                 />
-                <span>Show random quirky Windows popups ("Brain.exe stopped responding")</span>
+                <span>Simulate authentic random Windows 98 error popups</span>
+              </label>
+            </fieldset>
+
+            <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
+              <legend>Taskbar Clock Format</legend>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={clock24Hour}
+                  onChange={(e) => setClock24Hour(e.target.checked)}
+                />
+                <span>Use 24-Hour Time Format</span>
               </label>
             </fieldset>
           </div>
@@ -187,42 +230,28 @@ export const ControlPanelApp: React.FC = () => {
         {/* SYSTEM TAB */}
         {activeTab === 'system' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
-              <legend>Clock Format</legend>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={clock24Hour}
-                  onChange={(e) => setClock24Hour(e.target.checked)}
-                />
-                <span>Use 24-hour military time</span>
-              </label>
-            </fieldset>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+              <img src="/icons/my-computer.svg" alt="" style={{ width: '48px', height: '48px' }} />
+              <div style={{ lineHeight: '1.5' }}>
+                <div><strong>Computer:</strong> GenuineIntel Pentium(R) II 350MHz</div>
+                <div><strong>Memory:</strong> 128.0 MB SDRAM</div>
+                <div><strong>OS:</strong> Microsoft Windows 98 SE (4.10.2222 A)</div>
+                <div><strong>User:</strong> Alex Sharma (Hostel Room 204, 1998-2005)</div>
+                <div><strong>Hackathon:</strong> Gandhi Hackathon, IIT Bhilai (2026)</div>
+              </div>
+            </div>
 
-            <fieldset style={{ border: '1px solid #808080', padding: '10px' }}>
-              <legend>Factory Reset</legend>
+            <fieldset style={{ border: '1px solid #808080', padding: '10px', marginTop: '10px' }}>
+              <legend>Danger Zone</legend>
               <p style={{ margin: '0 0 8px 0', color: '#666' }}>
-                Restore all deleted files, original notes, and reset discoveries.
+                Reset virtual files, browser cache, and unlocked story discoveries back to original state.
               </p>
-              <button className="win-button" onClick={handleResetSystem} style={{ color: '#800000', fontWeight: 'bold' }}>
-                Restore All Factory Defaults
+              <button className="win-button" onClick={handleResetSystem} style={{ color: '#a00000' }}>
+                Factory Reset Abandoned PC
               </button>
             </fieldset>
           </div>
         )}
-      </div>
-
-      {/* Footer OK / Cancel */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '6px', padding: '6px' }}>
-        <button className="win-button" style={{ fontWeight: 'bold' }}>
-          OK
-        </button>
-        <button className="win-button">
-          Cancel
-        </button>
-        <button className="win-button">
-          Apply
-        </button>
       </div>
     </div>
   );
