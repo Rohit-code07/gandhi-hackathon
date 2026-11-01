@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type WallpaperId = 'teal' | 'clouds' | 'space' | 'matrix' | 'mystery';
+export type WallpaperId = 'gandhi' | 'teal' | 'clouds' | 'space' | 'matrix' | 'mystery';
 export type ScreenSaverId = 'flying-windows' | 'pipes' | 'starfield' | 'matrix' | 'dvd' | 'none';
 
 interface SettingsStoreState {
@@ -28,9 +28,13 @@ interface SettingsStoreState {
 export const useSettingsStore = create<SettingsStoreState>((set) => {
   const saved = localStorage.getItem('win98_settings');
   const initial = saved
-    ? JSON.parse(saved)
+    ? {
+        ...JSON.parse(saved),
+        wallpaper: JSON.parse(saved).wallpaper === 'teal' ? 'gandhi' : (JSON.parse(saved).wallpaper || 'gandhi'),
+        unlockedWallpapers: Array.from(new Set([...(JSON.parse(saved).unlockedWallpapers || []), 'gandhi', 'teal', 'clouds', 'space']))
+      }
     : {
-        wallpaper: 'teal',
+        wallpaper: 'gandhi',
         customWallpaperUrl: null,
         screensaver: 'flying-windows',
         screensaverTimeout: 3,
@@ -38,7 +42,7 @@ export const useSettingsStore = create<SettingsStoreState>((set) => {
         randomErrorsEnabled: true,
         crtFilter: false,
         clock24Hour: false,
-        unlockedWallpapers: ['teal', 'clouds', 'space']
+        unlockedWallpapers: ['gandhi', 'teal', 'clouds', 'space']
       };
 
   const persist = (next: any) => {

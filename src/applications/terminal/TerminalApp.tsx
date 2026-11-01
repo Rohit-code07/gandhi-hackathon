@@ -118,6 +118,17 @@ export const TerminalApp: React.FC = () => {
         triggerBSOD();
         return;
 
+      case 'chase':
+      case 'start_chase':
+        newLines.push(
+          { text: 'Starting The Great Start Button Chase Easter Egg...' },
+          { text: 'Look out! The Start button is making a run for it!' }
+        );
+        setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('win98-restart-chase'));
+        }, 600);
+        break;
+
       case 'format c:':
         unlockDiscovery('dos-hacker');
         newLines.push(

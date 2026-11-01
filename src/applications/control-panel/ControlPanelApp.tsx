@@ -78,6 +78,7 @@ export const ControlPanelApp: React.FC = () => {
               <legend>Desktop Wallpaper</legend>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {[
+                  { id: 'gandhi', label: 'Gandhi Meme - Aaj Bich Me Koi Nahi Aayega (Hackathon Edition)' },
                   { id: 'teal', label: 'Classic Windows Teal (#008080)' },
                   { id: 'clouds', label: 'Windows Clouds (Gradient Blue)' },
                   { id: 'space', label: 'Retro Space 1998' },

@@ -127,27 +127,36 @@ export const Desktop: React.FC = () => {
 
   const getWallpaperBackground = () => {
     if (customWallpaperUrl) {
-      return `url("${customWallpaperUrl}") center/cover no-repeat`;
+      return `url("${customWallpaperUrl}")`;
     }
     switch (wallpaper) {
+      case 'gandhi':
+        return 'url("/wallpapers/gandhi_meme.jpg")';
       case 'clouds':
         return 'linear-gradient(180deg, #1084d0 0%, #70b0e0 40%, #ffffff 100%)';
       case 'space':
         return 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)';
       case 'matrix':
-        return '#001100';
+        return 'none';
       case 'mystery':
         return 'linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)';
       case 'teal':
+        return 'none';
       default:
-        return '#008080';
+        return 'url("/wallpapers/gandhi_meme.jpg")';
     }
   };
 
   return (
     <div
       className="desktop-container"
-      style={{ background: getWallpaperBackground() }}
+      style={{
+        backgroundImage: getWallpaperBackground(),
+        backgroundColor: wallpaper === 'matrix' ? '#001100' : wallpaper === 'teal' ? '#008080' : '#000000',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
       onContextMenu={handleContextMenu}
       onClick={() => {
         setSelectedIconId(null);

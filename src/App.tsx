@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { StartButtonChase } from './components/boot/StartButtonChase';
 import { BootSequence } from './components/boot/BootSequence';
 import { Desktop } from './components/desktop/Desktop';
 import { WindowManager } from './components/windows/WindowManager';
@@ -13,8 +14,8 @@ import { useFilesystemStore } from './store/filesystemStore';
 import './styles/global.css';
 
 export const App: React.FC = () => {
-  const [bootCompleted, setBootCompleted] = useState<boolean>(() => {
-    return localStorage.getItem('win98_skip_boot') === 'true';
+  const [startupPhase, setStartupPhase] = useState<'chase' | 'dos-boot' | 'desktop'>(() => {
+    return localStorage.getItem('win98_skip_boot') === 'true' ? 'desktop' : 'chase';
   });
 
   const { init: initFilesystem } = useFilesystemStore();
@@ -23,15 +24,28 @@ export const App: React.FC = () => {
     initFilesystem();
   }, [initFilesystem]);
 
-  const handleBootFinish = () => {
-    setBootCompleted(true);
-    // Mark in session so repeat refreshes within session can load fast, or keep boot sequence accessible
+  useEffect(() => {
+    const handleRestartChase = () => setStartupPhase('chase');
+    window.addEventListener('win98-restart-chase', handleRestartChase);
+    return () => window.removeEventListener('win98-restart-chase', handleRestartChase);
+  }, []);
+
+  const handleFinishStartup = () => {
+    setStartupPhase('desktop');
   };
 
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-      {!bootCompleted ? (
-        <BootSequence onComplete={handleBootFinish} />
+      {startupPhase === 'chase' ? (
+        <StartButtonChase
+          onComplete={handleFinishStartup}
+          onSwitchToDos={() => setStartupPhase('dos-boot')}
+        />
+      ) : startupPhase === 'dos-boot' ? (
+        <BootSequence
+          onComplete={handleFinishStartup}
+          onSwitchToChase={() => setStartupPhase('chase')}
+        />
       ) : (
         <>
           <Desktop />

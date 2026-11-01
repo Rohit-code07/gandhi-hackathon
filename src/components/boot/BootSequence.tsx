@@ -3,9 +3,10 @@ import { soundService } from '../../services/soundService';
 
 interface BootSequenceProps {
   onComplete: () => void;
+  onSwitchToChase?: () => void;
 }
 
-export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
+export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete, onSwitchToChase }) => {
   const [stage, setStage] = useState<number>(1);
   const [diagLines, setDiagLines] = useState<string[]>([]);
   const [progress, setProgress] = useState<number>(0);
@@ -91,23 +92,44 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
         overflow: 'hidden'
       }}
     >
-      {/* Quick Skip Button */}
-      <button
-        onClick={onComplete}
-        className="win-button"
+      {/* Top Controls */}
+      <div
         style={{
           position: 'absolute',
           top: '20px',
           right: '20px',
           zIndex: 1000000,
-          background: '#c0c0c0',
-          color: '#000',
-          fontSize: '12px',
-          padding: '4px 14px'
+          display: 'flex',
+          gap: '8px'
         }}
       >
-        Skip Boot Sequence &gt;&gt;
-      </button>
+        {onSwitchToChase && (
+          <button
+            onClick={onSwitchToChase}
+            className="win-button"
+            style={{
+              background: '#c0c0c0',
+              color: '#000',
+              fontSize: '12px',
+              padding: '4px 14px'
+            }}
+          >
+            🏃 Start Button Chase
+          </button>
+        )}
+        <button
+          onClick={onComplete}
+          className="win-button"
+          style={{
+            background: '#c0c0c0',
+            color: '#000',
+            fontSize: '12px',
+            padding: '4px 14px'
+          }}
+        >
+          Skip Boot Sequence &gt;&gt;
+        </button>
+      </div>
 
       {/* STAGE 1: DOS Prompt Boot */}
       {stage === 1 && (

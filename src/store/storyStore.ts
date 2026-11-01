@@ -93,6 +93,13 @@ export const INITIAL_DISCOVERIES: Discovery[] = [
     description: 'Triggered the judges walk-through with CTRL + SHIFT + H.',
     discovered: false,
     hint: 'Press Ctrl + Shift + H anywhere on desktop'
+  },
+  {
+    id: 'start-chase',
+    title: 'The Great Start Button Chase',
+    description: 'Chased down the escaping Start button (or outsmarted it with the Enter key).',
+    discovered: false,
+    hint: 'Catch the fleeing Start button 5 times or press Enter on the startup screen'
   }
 ];
 

@@ -334,6 +334,20 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onShutDow
           <span style={{ fontWeight: 'bold', color: '#800000' }}>Secret Discoveries</span>
         </div>
 
+        {/* The Great Start Button Chase */}
+        <div
+          className="start-menu-item"
+          onMouseEnter={() => setActiveSubmenu(null)}
+          onClick={() => {
+            onClose();
+            window.dispatchEvent(new CustomEvent('win98-restart-chase'));
+          }}
+          style={{ backgroundColor: '#ffffe0' }}
+        >
+          <img src="/icons/win98.svg" alt="" style={{ width: '20px', height: '20px' }} />
+          <span style={{ fontWeight: 'bold', color: '#000080' }}>Start Button Chase (Easter Egg)</span>
+        </div>
+
         <div className="win-dropdown-separator" />
 
         {/* Shut Down */}
