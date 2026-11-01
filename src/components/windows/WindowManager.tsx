@@ -19,6 +19,10 @@ import { SnakeApp } from '../../applications/snake/SnakeApp';
 import { TerminalApp } from '../../applications/terminal/TerminalApp';
 import { ControlPanelApp } from '../../applications/control-panel/ControlPanelApp';
 import { SecretEventsApp } from '../../applications/secret-events/SecretEventsApp';
+import { PapaAaGayeApp } from '../../applications/papa-aa-gaye/PapaAaGayeApp';
+import { CyberCafeApp } from '../../applications/cyber-cafe/CyberCafeApp';
+import { Download99App } from '../../applications/download-99/Download99App';
+import { AchievementsApp } from '../../applications/achievements/AchievementsApp';
 
 // Easter Egg Modals
 import { FakeVirusModal } from '../easter-eggs/FakeVirusModal';
@@ -73,6 +77,14 @@ export const WindowManager: React.FC = () => {
         return <DialUpModal />;
       case 'old-photo':
         return <OldPhotoModal />;
+      case 'papa-aa-gaye':
+        return <PapaAaGayeApp />;
+      case 'cyber-cafe':
+        return <CyberCafeApp />;
+      case 'download-99':
+        return <Download99App />;
+      case 'achievements':
+        return <AchievementsApp />;
       default:
         return <div>Application not found</div>;
     }

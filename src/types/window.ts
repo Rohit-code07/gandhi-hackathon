@@ -17,7 +17,11 @@ export type AppId =
   | 'secret-events'
   | 'fake-virus'
   | 'dial-up'
-  | 'old-photo';
+  | 'old-photo'
+  | 'papa-aa-gaye'
+  | 'cyber-cafe'
+  | 'download-99'
+  | 'achievements';
 
 export interface WindowState {
   id: string;

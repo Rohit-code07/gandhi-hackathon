@@ -8,6 +8,7 @@ import { RandomErrorModal } from './components/easter-eggs/RandomErrorModal';
 import { KonamiListener } from './components/easter-eggs/KonamiListener';
 import { PresentationMode } from './components/easter-eggs/PresentationMode';
 import { ScreenSaverManager } from './components/screensavers/ScreenSaverManager';
+import { AchievementToast } from './components/shared/AchievementToast';
 import { useFilesystemStore } from './store/filesystemStore';
 import './styles/global.css';
 
@@ -41,6 +42,7 @@ export const App: React.FC = () => {
           <KonamiListener />
           <PresentationMode />
           <ScreenSaverManager />
+          <AchievementToast />
         </>
       )}
     </div>

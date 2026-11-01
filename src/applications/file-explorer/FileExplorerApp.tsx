@@ -87,6 +87,12 @@ export const FileExplorerApp: React.FC<FileExplorerProps> = ({
       // Open file according to extension
       if (file.name === 'ILOVEYOU.exe') {
         openWindow('fake-virus');
+      } else if (file.name === 'Papa_Aa_Gaye.exe') {
+        openWindow('papa-aa-gaye');
+      } else if (file.name === 'Cyber_Cafe_2005.exe') {
+        openWindow('cyber-cafe');
+      } else if (file.name === 'Download_99_Percent.exe') {
+        openWindow('download-99');
       } else if (file.extension === 'txt' || file.extension === 'bat' || file.extension === 'wsz') {
         openWindow('notepad', `${file.name} - Notepad`, '/icons/notepad.svg', undefined, { file });
       } else if (file.extension === 'bmp' || file.extension === 'jpg') {

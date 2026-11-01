@@ -27,9 +27,13 @@ const DEFAULT_SHORTCUTS: DesktopShortcut[] = [
   { id: 'sc-terminal', appId: 'terminal', title: 'MS-DOS Prompt', icon: '/icons/terminal.svg', initialX: 104, initialY: 496, action: () => {} },
 
   // Column 3
-  { id: 'sc-secret', appId: 'file-explorer', title: 'Secret Folder', icon: '/icons/secret-folder.svg', initialX: 192, initialY: 16, action: () => {} },
-  { id: 'sc-pictures', appId: 'file-explorer', title: 'My Pictures', icon: '/icons/my-pictures.svg', initialX: 192, initialY: 96, action: () => {} },
-  { id: 'sc-control', appId: 'control-panel', title: 'Control Panel', icon: '/icons/control-panel.svg', initialX: 192, initialY: 176, action: () => {} }
+  { id: 'sc-games', appId: 'file-explorer', title: 'Games', icon: '/icons/games-folder.svg', initialX: 192, initialY: 16, action: () => {} },
+  { id: 'sc-papa', appId: 'papa-aa-gaye', title: 'Papa Aa Gaye!', icon: '/icons/papa.svg', initialX: 192, initialY: 96, action: () => {} },
+  { id: 'sc-cybercafe', appId: 'cyber-cafe', title: 'Cyber Cafe', icon: '/icons/cyber-cafe.svg', initialX: 192, initialY: 176, action: () => {} },
+  { id: 'sc-download99', appId: 'download-99', title: '99% Download', icon: '/icons/download-99.svg', initialX: 192, initialY: 256, action: () => {} },
+  { id: 'sc-secret', appId: 'file-explorer', title: 'Secret Folder', icon: '/icons/secret-folder.svg', initialX: 192, initialY: 336, action: () => {} },
+  { id: 'sc-pictures', appId: 'file-explorer', title: 'My Pictures', icon: '/icons/my-pictures.svg', initialX: 192, initialY: 416, action: () => {} },
+  { id: 'sc-control', appId: 'control-panel', title: 'Control Panel', icon: '/icons/control-panel.svg', initialX: 192, initialY: 496, action: () => {} }
 ];
 
 export const Desktop: React.FC = () => {
@@ -74,6 +78,8 @@ export const Desktop: React.FC = () => {
     soundService.playClick();
     if (sc.id === 'sc-documents') {
       openWindow('file-explorer', 'My Documents', '/icons/my-documents.svg', undefined, { initialPath: 'C:/My Documents' });
+    } else if (sc.id === 'sc-games') {
+      openWindow('file-explorer', 'Games', '/icons/games-folder.svg', undefined, { initialPath: 'C:/Games' });
     } else if (sc.id === 'sc-recycle') {
       openWindow('file-explorer', 'Recycle Bin', '/icons/recycle-full.svg', undefined, { initialPath: 'C:/Recycle Bin' });
     } else if (sc.id === 'sc-secret') {

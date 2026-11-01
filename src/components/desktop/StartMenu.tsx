@@ -78,6 +78,40 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onShutDow
               {/* Games */}
               <div
                 className="start-menu-item"
+                onClick={() => handleLaunch(() => openWindow('papa-aa-gaye'))}
+                style={{ fontWeight: 'bold' }}
+              >
+                <img src="/icons/papa.svg" alt="" style={{ width: '16px', height: '16px' }} />
+                <span>Papa Aa Gaye!</span>
+              </div>
+              <div
+                className="start-menu-item"
+                onClick={() => handleLaunch(() => openWindow('cyber-cafe'))}
+                style={{ fontWeight: 'bold' }}
+              >
+                <img src="/icons/cyber-cafe.svg" alt="" style={{ width: '16px', height: '16px' }} />
+                <span>Cyber Café 2005</span>
+              </div>
+              <div
+                className="start-menu-item"
+                onClick={() => handleLaunch(() => openWindow('download-99'))}
+                style={{ fontWeight: 'bold' }}
+              >
+                <img src="/icons/download-99.svg" alt="" style={{ width: '16px', height: '16px' }} />
+                <span>99% Download</span>
+              </div>
+              <div
+                className="start-menu-item"
+                onClick={() => handleLaunch(() => openWindow('achievements'))}
+              >
+                <img src="/icons/achievements.svg" alt="" style={{ width: '16px', height: '16px' }} />
+                <span>Game Trophies</span>
+              </div>
+
+              <div className="win-dropdown-separator" />
+
+              <div
+                className="start-menu-item"
                 onClick={() => handleLaunch(() => openWindow('minesweeper'))}
               >
                 <img src="/icons/minesweeper.svg" alt="" style={{ width: '16px', height: '16px' }} />

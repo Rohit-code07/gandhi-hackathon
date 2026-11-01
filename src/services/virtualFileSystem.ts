@@ -297,6 +297,44 @@ Year 2026: Some genius students at IIT Bhilai will boot up my abandoned computer
 (If this happened, hi judges! You found my easter egg!)`
   },
 
+  // Games folder
+  {
+    id: 'file-game-papa',
+    name: 'Papa_Aa_Gaye.exe',
+    path: 'C:/Games/Papa_Aa_Gaye.exe',
+    parentPath: 'C:/Games',
+    type: 'file',
+    extension: 'exe',
+    size: 2048576,
+    modifiedAt: '2005-04-12 18:30',
+    icon: '/icons/papa.svg',
+    content: 'GAME_PAPA_AA_GAYE'
+  },
+  {
+    id: 'file-game-cyber-cafe',
+    name: 'Cyber_Cafe_2005.exe',
+    path: 'C:/Games/Cyber_Cafe_2005.exe',
+    parentPath: 'C:/Games',
+    type: 'file',
+    extension: 'exe',
+    size: 3145728,
+    modifiedAt: '2005-08-20 14:15',
+    icon: '/icons/cyber-cafe.svg',
+    content: 'GAME_CYBER_CAFE'
+  },
+  {
+    id: 'file-game-download-99',
+    name: 'Download_99_Percent.exe',
+    path: 'C:/Games/Download_99_Percent.exe',
+    parentPath: 'C:/Games',
+    type: 'file',
+    extension: 'exe',
+    size: 1572864,
+    modifiedAt: '2005-11-01 02:45',
+    icon: '/icons/download-99.svg',
+    content: 'GAME_DOWNLOAD_99'
+  },
+
   // Downloads folder - Fake Virus ILOVEYOU.exe
   {
     id: 'file-iloveyou',

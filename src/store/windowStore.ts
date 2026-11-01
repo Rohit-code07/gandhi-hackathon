@@ -139,6 +139,30 @@ const DEFAULT_APP_CONFIGS: Record<
     icon: '/icons/file-image.svg',
     width: 500,
     height: 400
+  },
+  'papa-aa-gaye': {
+    title: 'Papa Aa Gaye! (Stealth Reflex Simulator)',
+    icon: '/icons/papa.svg',
+    width: 740,
+    height: 520
+  },
+  'cyber-cafe': {
+    title: 'Cyber Cafe Simulator 2005 - STD PCO',
+    icon: '/icons/cyber-cafe.svg',
+    width: 800,
+    height: 540
+  },
+  'download-99': {
+    title: 'The 99% Download Challenge (Dial-Up Edition)',
+    icon: '/icons/download-99.svg',
+    width: 660,
+    height: 500
+  },
+  achievements: {
+    title: 'Retro Games Achievements & Trophies',
+    icon: '/icons/achievements.svg',
+    width: 560,
+    height: 440
   }
 };
 
