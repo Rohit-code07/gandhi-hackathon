@@ -252,3 +252,14 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@keyframes win98FadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

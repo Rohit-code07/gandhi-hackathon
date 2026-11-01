@@ -1,12 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFilesystemStore } from '../../store/filesystemStore';
 import { useStoryStore } from '../../store/storyStore';
+import { StoredPhoto, photoStorageService } from '../../services/photoStorageService';
 
 interface MemeItem {
   id: string;
   title: string;
   caption: string;
   svgPath: string;
+}
+
+interface MemeFactoryProps {
+  customPhotoUrl?: string;
+  customPhotoName?: string;
 }
 
 const MEME_GALLERY: MemeItem[] = [
@@ -24,21 +30,30 @@ const MEME_GALLERY: MemeItem[] = [
   { id: 'meme-27-years-later', title: 'THE ABANDONED PC IN 2026', caption: 'Some memories never crash.', svgPath: '/memes/meme-27-years-later.svg' }
 ];
 
-export const MemeFactoryApp: React.FC = () => {
+export const MemeFactoryApp: React.FC<MemeFactoryProps> = ({ customPhotoUrl, customPhotoName }) => {
   const { createFile } = useFilesystemStore();
   const { unlockDiscovery } = useStoryStore();
 
-  const [activeTab, setActiveTab] = useState<'gallery' | 'generator'>('gallery');
+  const [activeTab, setActiveTab] = useState<'gallery' | 'generator'>(customPhotoUrl ? 'generator' : 'gallery');
   const [selectedMeme, setSelectedMeme] = useState<MemeItem>(MEME_GALLERY[0]);
+  const [userPhotos, setUserPhotos] = useState<StoredPhoto[]>([]);
 
   // Generator state
   const [topText, setTopText] = useState<string>('WHEN YOU BOOT UP AN ABANDONED PC');
   const [bottomText, setBottomText] = useState<string>('AND WIN 1ST PRIZE AT IIT BHILAI');
   const [textColor, setTextColor] = useState<string>('#ffffff');
   const [fontSize, setFontSize] = useState<number>(26);
-  const [templateId, setTemplateId] = useState<string>(MEME_GALLERY[0].id);
+  const [templateId, setTemplateId] = useState<string>(
+    customPhotoUrl ? 'custom-passed-photo' : MEME_GALLERY[0].id
+  );
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    photoStorageService.getAllPhotos().then((photos) => {
+      setUserPhotos(photos);
+    });
+  }, []);
 
   // Render canvas when generator params change
   useEffect(() => {
@@ -48,12 +63,45 @@ export const MemeFactoryApp: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    let imgSrc = '';
+    if (templateId === 'custom-passed-photo' && customPhotoUrl) {
+      imgSrc = customPhotoUrl;
+    } else if (templateId.startsWith('photo-')) {
+      const p = userPhotos.find((photo) => photo.id === templateId);
+      if (p) imgSrc = photoStorageService.getObjectUrl(p);
+    } else {
+      const curr = MEME_GALLERY.find((m) => m.id === templateId) || MEME_GALLERY[0];
+      imgSrc = curr.svgPath;
+    }
+
+    if (!imgSrc) return;
+
     const img = new Image();
-    const curr = MEME_GALLERY.find((m) => m.id === templateId) || MEME_GALLERY[0];
-    img.src = curr.svgPath;
+    img.crossOrigin = 'anonymous';
+    img.src = imgSrc;
 
     img.onload = () => {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // Draw image scaled to fit canvas with letterboxing if needed
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const hRatio = canvas.width / img.width;
+      const vRatio = canvas.height / img.height;
+      const ratio = Math.min(hRatio, vRatio);
+      const centerShiftX = (canvas.width - img.width * ratio) / 2;
+      const centerShiftY = (canvas.height - img.height * ratio) / 2;
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        img.width,
+        img.height,
+        centerShiftX,
+        centerShiftY,
+        img.width * ratio,
+        img.height * ratio
+      );
 
       // Render meme text with black stroke & bold impact style
       ctx.fillStyle = textColor;
@@ -72,7 +120,7 @@ export const MemeFactoryApp: React.FC = () => {
         ctx.fillText(bottomText.toUpperCase(), canvas.width / 2, canvas.height - 20);
       }
     };
-  }, [activeTab, topText, bottomText, textColor, fontSize, templateId]);
+  }, [activeTab, topText, bottomText, textColor, fontSize, templateId, userPhotos, customPhotoUrl]);
 
   const handleDownloadPNG = () => {
     const canvas = canvasRef.current;
@@ -91,6 +139,11 @@ export const MemeFactoryApp: React.FC = () => {
     const name = prompt('Save meme as in C:/My Pictures:', 'hacker_meme.bmp');
     if (name) {
       await createFile('C:/My Pictures', name, dataUrl);
+      canvas.toBlob(async (blob) => {
+        if (blob) {
+          await photoStorageService.savePhoto(blob, name, 'C:/My Pictures');
+        }
+      }, 'image/png');
       unlockDiscovery('meme-generator');
       alert(`Meme successfully saved to C:/My Pictures/${name}!`);
     }
@@ -240,11 +293,25 @@ export const MemeFactoryApp: React.FC = () => {
                 onChange={(e) => setTemplateId(e.target.value)}
                 style={{ width: '100%', marginTop: '3px' }}
               >
-                {MEME_GALLERY.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.title}
+                {customPhotoUrl && (
+                  <option value="custom-passed-photo">
+                    ⭐ Selected Photo ({customPhotoName || 'Custom'})
                   </option>
-                ))}
+                )}
+                <optgroup label="Uploaded / Personal Photos">
+                  {userPhotos.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      📷 {p.name}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Classic 1998 Memes">
+                  {MEME_GALLERY.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.title}
+                    </option>
+                  ))}
+                </optgroup>
               </select>
             </div>
 

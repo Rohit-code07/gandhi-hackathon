@@ -21,7 +21,9 @@ export type AppId =
   | 'papa-aa-gaye'
   | 'cyber-cafe'
   | 'download-99'
-  | 'achievements';
+  | 'achievements'
+  | 'my-pictures'
+  | 'image-viewer';
 
 export interface WindowState {
   id: string;

@@ -336,6 +336,11 @@ class SoundService {
     });
   }
 
+  // Windows 98 Ta-Da!
+  public playTada() {
+    this.playSuccess();
+  }
+
   // Game Over Sad Slide
   public playGameOver() {
     if (this.isMuted) return;

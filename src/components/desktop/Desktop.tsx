@@ -38,7 +38,7 @@ const DEFAULT_SHORTCUTS: DesktopShortcut[] = [
 
 export const Desktop: React.FC = () => {
   const { openWindow } = useWindowStore();
-  const { wallpaper, crtFilter } = useSettingsStore();
+  const { wallpaper, crtFilter, customWallpaperUrl } = useSettingsStore();
   const { createFile, createFolder, clipboard, pasteClipboard } = useFilesystemStore();
 
   const [shortcuts, setShortcuts] = useState<DesktopShortcut[]>(() => {
@@ -85,7 +85,7 @@ export const Desktop: React.FC = () => {
     } else if (sc.id === 'sc-secret') {
       openWindow('file-explorer', 'C:/Secret/DO_NOT_OPEN', '/icons/secret-folder.svg', undefined, { initialPath: 'C:/Secret/DO_NOT_OPEN' });
     } else if (sc.id === 'sc-pictures') {
-      openWindow('file-explorer', 'My Pictures', '/icons/my-pictures.svg', undefined, { initialPath: 'C:/My Pictures' });
+      openWindow('my-pictures');
     } else {
       openWindow(sc.appId as any);
     }
@@ -126,6 +126,9 @@ export const Desktop: React.FC = () => {
   };
 
   const getWallpaperBackground = () => {
+    if (customWallpaperUrl) {
+      return `url("${customWallpaperUrl}") center/cover no-repeat`;
+    }
     switch (wallpaper) {
       case 'clouds':
         return 'linear-gradient(180deg, #1084d0 0%, #70b0e0 40%, #ffffff 100%)';

@@ -23,6 +23,8 @@ import { PapaAaGayeApp } from '../../applications/papa-aa-gaye/PapaAaGayeApp';
 import { CyberCafeApp } from '../../applications/cyber-cafe/CyberCafeApp';
 import { Download99App } from '../../applications/download-99/Download99App';
 import { AchievementsApp } from '../../applications/achievements/AchievementsApp';
+import { MyPicturesApp } from '../../applications/my-pictures/MyPicturesApp';
+import { ImageViewerApp } from '../../applications/image-viewer/ImageViewerApp';
 
 // Easter Egg Modals
 import { FakeVirusModal } from '../easter-eggs/FakeVirusModal';
@@ -46,7 +48,13 @@ export const WindowManager: React.FC = () => {
       case 'notepad':
         return <NotepadApp initialFile={win.initialData?.file} />;
       case 'paint':
-        return <PaintApp initialFile={win.initialData?.file} />;
+        return (
+          <PaintApp
+            initialFile={win.initialData?.file}
+            photoUrl={win.initialData?.photoUrl}
+            photoName={win.initialData?.photoName}
+          />
+        );
       case 'calculator':
         return <CalculatorApp />;
       case 'ie':
@@ -58,7 +66,12 @@ export const WindowManager: React.FC = () => {
       case 'winamp':
         return <WinampApp />;
       case 'meme-factory':
-        return <MemeFactoryApp />;
+        return (
+          <MemeFactoryApp
+            customPhotoUrl={win.initialData?.customPhotoUrl}
+            customPhotoName={win.initialData?.customPhotoName}
+          />
+        );
       case 'minesweeper':
         return <MinesweeperApp />;
       case 'solitaire':
@@ -85,6 +98,15 @@ export const WindowManager: React.FC = () => {
         return <Download99App />;
       case 'achievements':
         return <AchievementsApp />;
+      case 'my-pictures':
+        return <MyPicturesApp />;
+      case 'image-viewer':
+        return (
+          <ImageViewerApp
+            photoId={win.initialData?.photoId}
+            folder={win.initialData?.folder}
+          />
+        );
       default:
         return <div>Application not found</div>;
     }

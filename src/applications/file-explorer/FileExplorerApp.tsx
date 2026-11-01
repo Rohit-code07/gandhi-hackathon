@@ -95,13 +95,14 @@ export const FileExplorerApp: React.FC<FileExplorerProps> = ({
         openWindow('download-99');
       } else if (file.extension === 'txt' || file.extension === 'bat' || file.extension === 'wsz') {
         openWindow('notepad', `${file.name} - Notepad`, '/icons/notepad.svg', undefined, { file });
-      } else if (file.extension === 'bmp' || file.extension === 'jpg') {
+      } else if (['bmp', 'jpg', 'jpeg', 'png', 'gif', 'webp'].includes(file.extension?.toLowerCase() || '')) {
         if (file.name.includes('family_trip')) {
           unlockDiscovery('old-photo');
-          openWindow('old-photo');
-        } else {
-          openWindow('paint', `${file.name} - Paint`, '/icons/paint.svg', undefined, { file });
         }
+        openWindow('image-viewer', `${file.name} - Picture Viewer`, '/icons/file-image.svg', undefined, {
+          folder: file.parentPath,
+          forceNewInstance: true
+        });
       } else {
         openWindow('notepad', `${file.name} - Notepad`, '/icons/notepad.svg', undefined, { file });
       }

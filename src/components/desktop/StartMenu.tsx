@@ -205,6 +205,15 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onShutDow
             <div className="start-submenu" style={{ width: '220px' }}>
               <div
                 className="start-menu-item"
+                onClick={() => handleLaunch(() => openWindow('my-pictures'))}
+                style={{ fontWeight: 'bold' }}
+              >
+                <img src="/icons/my-pictures.svg" alt="" style={{ width: '16px', height: '16px' }} />
+                <span>My Pictures</span>
+              </div>
+              <div className="win-dropdown-separator" />
+              <div
+                className="start-menu-item"
                 onClick={() =>
                   handleLaunch(() => {
                     const f = files.find((item) => item.name === 'diary.txt');

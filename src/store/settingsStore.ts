@@ -5,6 +5,7 @@ export type ScreenSaverId = 'flying-windows' | 'pipes' | 'starfield' | 'matrix' 
 
 interface SettingsStoreState {
   wallpaper: WallpaperId;
+  customWallpaperUrl: string | null;
   screensaver: ScreenSaverId;
   screensaverTimeout: number; // minutes
   soundsEnabled: boolean;
@@ -14,6 +15,7 @@ interface SettingsStoreState {
   unlockedWallpapers: string[];
 
   setWallpaper: (w: WallpaperId) => void;
+  setCustomWallpaper: (url: string | null) => void;
   setScreensaver: (s: ScreenSaverId) => void;
   setScreensaverTimeout: (mins: number) => void;
   setSoundsEnabled: (enabled: boolean) => void;
@@ -29,6 +31,7 @@ export const useSettingsStore = create<SettingsStoreState>((set) => {
     ? JSON.parse(saved)
     : {
         wallpaper: 'teal',
+        customWallpaperUrl: null,
         screensaver: 'flying-windows',
         screensaverTimeout: 3,
         soundsEnabled: true,
@@ -46,9 +49,15 @@ export const useSettingsStore = create<SettingsStoreState>((set) => {
     ...initial,
     setWallpaper: (wallpaper) =>
       set((state) => {
-        const next = { ...state, wallpaper };
+        const next = { ...state, wallpaper, customWallpaperUrl: null };
         persist(next);
-        return { wallpaper };
+        return { wallpaper, customWallpaperUrl: null };
+      }),
+    setCustomWallpaper: (customWallpaperUrl) =>
+      set((state) => {
+        const next = { ...state, customWallpaperUrl };
+        persist(next);
+        return { customWallpaperUrl };
       }),
     setScreensaver: (screensaver) =>
       set((state) => {

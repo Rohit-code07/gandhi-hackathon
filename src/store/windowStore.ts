@@ -163,6 +163,18 @@ const DEFAULT_APP_CONFIGS: Record<
     icon: '/icons/achievements.svg',
     width: 560,
     height: 440
+  },
+  'my-pictures': {
+    title: 'My Pictures',
+    icon: '/icons/my-pictures.svg',
+    width: 720,
+    height: 500
+  },
+  'image-viewer': {
+    title: 'Windows Picture Viewer',
+    icon: '/icons/file-image.svg',
+    width: 640,
+    height: 480
   }
 };
 

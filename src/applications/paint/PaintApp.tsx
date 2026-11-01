@@ -1,9 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFilesystemStore } from '../../store/filesystemStore';
 import { VirtualFile } from '../../types/filesystem';
+import { StoredPhoto, photoStorageService } from '../../services/photoStorageService';
+import { soundService } from '../../services/soundService';
 
 interface PaintProps {
   initialFile?: VirtualFile;
+  photoUrl?: string;
+  photoName?: string;
 }
 
 const PALETTE = [
@@ -11,7 +15,7 @@ const PALETTE = [
   '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'
 ];
 
-export const PaintApp: React.FC<PaintProps> = ({ initialFile }) => {
+export const PaintApp: React.FC<PaintProps> = ({ initialFile, photoUrl, photoName }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { createFile } = useFilesystemStore();
 
@@ -21,6 +25,31 @@ export const PaintApp: React.FC<PaintProps> = ({ initialFile }) => {
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [startPos, setStartPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [snapshot, setSnapshot] = useState<ImageData | null>(null);
+  const [openModalVisible, setOpenModalVisible] = useState<boolean>(false);
+  const [availablePhotos, setAvailablePhotos] = useState<StoredPhoto[]>([]);
+
+  const loadPhotoToCanvas = (src: string) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      // Clear with white
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Draw centered
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height, 1);
+      const w = img.width * scale;
+      const h = img.height * scale;
+      const x = (canvas.width - w) / 2;
+      const y = (canvas.height - h) / 2;
+      ctx.drawImage(img, x, y, w, h);
+    };
+    img.src = src;
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,7 +60,21 @@ export const PaintApp: React.FC<PaintProps> = ({ initialFile }) => {
     // Fill white background initially
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }, []);
+
+    if (photoUrl) {
+      loadPhotoToCanvas(photoUrl);
+    } else if (initialFile?.content && initialFile.content.startsWith('data:image')) {
+      loadPhotoToCanvas(initialFile.content);
+    }
+  }, [photoUrl, initialFile]);
+
+  const handleOpenFromPictures = async () => {
+    soundService.playClick();
+    await photoStorageService.init();
+    const photos = await photoStorageService.getAllPhotos();
+    setAvailablePhotos(photos);
+    setOpenModalVisible(true);
+  };
 
   const getCanvasCoords = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -125,15 +168,21 @@ export const PaintApp: React.FC<PaintProps> = ({ initialFile }) => {
     const name = prompt('Save artwork name to C:/My Pictures:', 'my_artwork.bmp');
     if (name) {
       await createFile('C:/My Pictures', name, dataUrl);
+      canvas.toBlob(async (blob) => {
+        if (blob) {
+          await photoStorageService.savePhoto(blob, name, 'C:/My Pictures');
+        }
+      }, 'image/png');
       alert(`Artwork successfully saved as C:/My Pictures/${name}!`);
     }
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#c0c0c0' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#c0c0c0', position: 'relative' }}>
       {/* Menubar */}
       <div className="win-menubar">
-        <div className="win-menu-item" onClick={handleClear}><u>C</u>lear</div>
+        <div className="win-menu-item" onClick={handleClear}><u>N</u>ew / Clear</div>
+        <div className="win-menu-item" onClick={handleOpenFromPictures}><u>O</u>pen from My Pictures...</div>
         <div className="win-menu-item" onClick={handleSaveToFilesystem}><u>S</u>ave to My Pictures</div>
       </div>
 
@@ -285,6 +334,127 @@ export const PaintApp: React.FC<PaintProps> = ({ initialFile }) => {
           ))}
         </div>
       </div>
+
+      {/* Open from My Pictures Dialog */}
+      {openModalVisible && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            zIndex: 999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <div className="win-outset" style={{ width: '420px', backgroundColor: '#c0c0c0', padding: '2px' }}>
+            <div
+              style={{
+                backgroundColor: '#000080',
+                color: '#fff',
+                padding: '3px 6px',
+                fontWeight: 'bold',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <span>Open Image from My Pictures</span>
+              <button
+                className="win-button"
+                style={{ padding: '0 4px', fontSize: '9px' }}
+                onClick={() => setOpenModalVisible(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div style={{ padding: '10px' }}>
+              <div style={{ marginBottom: '6px', fontSize: '11px' }}>
+                Select a picture from your digital album to edit:
+              </div>
+              <div
+                className="win-inset"
+                style={{
+                  height: '200px',
+                  backgroundColor: '#ffffff',
+                  overflowY: 'auto',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(85px, 1fr))',
+                  gap: '8px',
+                  padding: '6px'
+                }}
+              >
+                {availablePhotos.map((photo) => {
+                  const url = photoStorageService.getObjectUrl(photo);
+                  return (
+                    <div
+                      key={photo.id}
+                      onClick={() => {
+                        soundService.playClick();
+                        loadPhotoToCanvas(url);
+                        setOpenModalVisible(false);
+                      }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        border: '1px solid transparent'
+                      }}
+                      title={photo.name}
+                    >
+                      <div
+                        className="win-outset"
+                        style={{
+                          width: '74px',
+                          height: '56px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          overflow: 'hidden',
+                          backgroundColor: '#eee'
+                        }}
+                      >
+                        <img src={url} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover' }} />
+                      </div>
+                      <span
+                        style={{
+                          fontSize: '10px',
+                          maxWidth: '75px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          marginTop: '2px'
+                        }}
+                      >
+                        {photo.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: '6px 10px',
+                borderTop: '1px solid #808080'
+              }}
+            >
+              <button
+                className="win-button"
+                onClick={() => setOpenModalVisible(false)}
+                style={{ padding: '3px 14px' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
