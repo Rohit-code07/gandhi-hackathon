@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#1b1c1e"/>
+      <rect x="80" y="40" width="240" height="170" fill="#b09b7d" stroke="#504332" stroke-width="4"/>
+      <rect x="100" y="55" width="200" height="130" fill="#008080"/>
+      <text x="200" y="115" fill="#ffffff" font-family="monospace" font-size="16" font-weight="bold" text-anchor="middle">WELCOME BACK, USER.</text>
+      <text x="200" y="140" fill="#ffff00" font-family="monospace" font-size="12" text-anchor="middle">LAST LOGIN: OCT 24, 1998</text>
+      <text x="200" y="165" fill="#ffffff" font-family="monospace" font-size="11" text-anchor="middle">You have 1,489 unread ICQ messages.</text>
+      <text x="200" y="260" fill="#ffcc00" font-family="Impact" font-size="20" text-anchor="middle">"SOME MEMORIES NEVER CRASH."</text>
+    </svg>

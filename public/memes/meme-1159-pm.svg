@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#003366"/>
+      <circle cx="200" cy="110" r="60" fill="#fff" stroke="#000" stroke-width="4"/>
+      <line x1="200" y1="110" x2="200" y2="60" stroke="#000" stroke-width="4"/>
+      <line x1="200" y1="110" x2="192" y2="70" stroke="#f00" stroke-width="3"/>
+      <text x="200" y="195" fill="#ffdd00" font-family="Impact" font-size="20" text-anchor="middle">TIME REMAINING: 18 SECONDS</text>
+      <text x="200" y="225" fill="#fff" font-family="monospace" font-size="12" text-anchor="middle">Uploading: final_v3_plsGodAccept.doc (12% done)</text>
+      <text x="200" y="265" fill="#ffffff" font-family="Impact" font-size="18" text-anchor="middle">"DIAL-UP MODEM DISCONNECTED. GOODBYE DEGREE."</text>
+    </svg>

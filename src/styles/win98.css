@@ -1,0 +1,254 @@
+/* Windows 98 Authentic Retro Styling */
+:root {
+  --win-bg: #c0c0c0;
+  --win-text: #000000;
+  --win-title-active-start: #000080;
+  --win-title-active-end: #1084d0;
+  --win-title-inactive-start: #808080;
+  --win-title-inactive-end: #b5b5b5;
+  --win-title-text: #ffffff;
+  --win-border-light: #ffffff;
+  --win-border-mid-light: #dfdfdf;
+  --win-border-dark: #808080;
+  --win-border-darker: #000000;
+  --win-desktop-teal: #008080;
+  --win-highlight: #000080;
+  --win-highlight-text: #ffffff;
+  --win-disabled: #808080;
+  --win-font: 'Tahoma', 'MS Sans Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --win-font-size: 11px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--win-desktop-teal);
+  font-family: var(--win-font);
+  font-size: var(--win-font-size);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 3D Bevels */
+.win-outset {
+  background: var(--win-bg);
+  border: 2px solid;
+  border-color: var(--win-border-mid-light) var(--win-border-dark) var(--win-border-darker) var(--win-border-light);
+  box-shadow: inset 1px 1px 0px var(--win-border-light), inset -1px -1px 0px var(--win-border-dark);
+}
+
+.win-inset {
+  background: #ffffff;
+  border: 2px solid;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+  box-shadow: inset 1px 1px 0px var(--win-border-darker), inset -1px -1px 0px var(--win-border-mid-light);
+}
+
+.win-inset-gray {
+  background: var(--win-bg);
+  border: 2px solid;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+  box-shadow: inset 1px 1px 0px var(--win-border-darker), inset -1px -1px 0px var(--win-border-mid-light);
+}
+
+/* Buttons */
+.win-button {
+  background: var(--win-bg);
+  border: 2px solid;
+  border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+  box-shadow: inset 1px 1px 0px var(--win-border-mid-light), inset -1px -1px 0px var(--win-border-dark);
+  font-family: var(--win-font);
+  font-size: 11px;
+  color: #000;
+  padding: 3px 10px;
+  min-height: 22px;
+  min-width: 60px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.win-button:active, .win-button.active {
+  border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+  box-shadow: inset 1px 1px 0px var(--win-border-dark), inset -1px -1px 0px var(--win-border-mid-light);
+  padding: 4px 9px 2px 11px;
+}
+
+.win-button:disabled {
+  color: var(--win-disabled);
+  text-shadow: 1px 1px 0 #fff;
+  cursor: not-allowed;
+}
+
+/* Titlebars */
+.win-titlebar {
+  height: 20px;
+  background: linear-gradient(90deg, var(--win-title-active-start) 0%, var(--win-title-active-end) 100%);
+  color: var(--win-title-text);
+  font-weight: bold;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 3px 1px 3px;
+  margin: 2px 2px 0 2px;
+  letter-spacing: 0.3px;
+}
+
+.win-titlebar.inactive {
+  background: linear-gradient(90deg, var(--win-title-inactive-start) 0%, var(--win-title-inactive-end) 100%);
+  color: #c0c0c0;
+}
+
+.win-titlebar-btn {
+  width: 16px;
+  height: 14px;
+  background: var(--win-bg);
+  border: 1px solid;
+  border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+  box-shadow: inset 1px 1px 0 var(--win-border-mid-light), inset -1px -1px 0 var(--win-border-dark);
+  font-size: 9px;
+  font-weight: bold;
+  font-family: monospace;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 2px;
+  padding: 0;
+  line-height: 1;
+}
+
+.win-titlebar-btn:active {
+  border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+  box-shadow: inset 1px 1px 0 var(--win-border-dark);
+  padding-top: 1px;
+  padding-left: 1px;
+}
+
+/* Menubars */
+.win-menubar {
+  background: var(--win-bg);
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border-bottom: 1px solid var(--win-border-dark);
+  font-size: 11px;
+  position: relative;
+}
+
+.win-menu-item {
+  padding: 2px 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.win-menu-item:hover, .win-menu-item.open {
+  background: var(--win-highlight);
+  color: var(--win-highlight-text);
+}
+
+.win-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 150px;
+  background: var(--win-bg);
+  border: 2px solid;
+  border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+  z-index: 1000;
+  padding: 2px;
+}
+
+.win-dropdown-item {
+  padding: 3px 18px 3px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #000;
+  white-space: nowrap;
+}
+
+.win-dropdown-item:hover {
+  background: var(--win-highlight);
+  color: var(--win-highlight-text);
+}
+
+.win-dropdown-separator {
+  height: 1px;
+  border-top: 1px solid var(--win-border-dark);
+  border-bottom: 1px solid var(--win-border-light);
+  margin: 3px 2px;
+}
+
+/* Scrollbars - Classic Windows 98 Look */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background: #dfdfdf;
+}
+
+::-webkit-scrollbar-track {
+  background: #dfdfdf;
+  background-image: repeating-conic-gradient(#c0c0c0 0% 25%, #ffffff 0% 50%) 50% / 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--win-bg);
+  border: 2px solid;
+  border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+  box-shadow: inset 1px 1px 0 var(--win-border-mid-light), inset -1px -1px 0 var(--win-border-dark);
+}
+
+/* Inputs and Forms */
+input[type="text"], input[type="password"], textarea, select {
+  font-family: var(--win-font);
+  font-size: 11px;
+  background: #ffffff;
+  color: #000;
+  border: 2px solid;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--win-border-mid-light);
+  padding: 3px 4px;
+  outline: none;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+  background: #ffffff;
+}
+
+/* Status bar */
+.win-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  background: var(--win-bg);
+  border-top: 1px solid var(--win-border-dark);
+  font-size: 11px;
+}
+
+.win-status-pane {
+  border: 1px solid;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+  padding: 1px 6px;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

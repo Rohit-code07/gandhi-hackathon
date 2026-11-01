@@ -1,0 +1,27 @@
+[
+  {
+    "id": "teal",
+    "name": "Classic Windows Teal",
+    "css": "background-color: #008080;"
+  },
+  {
+    "id": "clouds",
+    "name": "Windows Clouds",
+    "css": "background: linear-gradient(180deg, #1084d0 0%, #70b0e0 40%, #ffffff 100%);"
+  },
+  {
+    "id": "space",
+    "name": "Retro Space 1998",
+    "css": "background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);"
+  },
+  {
+    "id": "matrix",
+    "name": "Matrix Code Stream",
+    "css": "background: #001100;"
+  },
+  {
+    "id": "mystery",
+    "name": "Abandoned Mystery (Unlocked)",
+    "css": "background: linear-gradient(135deg, #1f1c2c 0%, #928dab 100%);"
+  }
+]

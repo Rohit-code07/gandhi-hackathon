@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#555555"/>
+      <rect x="120" y="40" width="160" height="130" rx="3" fill="#c0c0c0" stroke="#000" stroke-width="3"/>
+      <rect x="135" y="55" width="130" height="90" fill="#000080"/>
+      <text x="200" y="105" fill="#fff" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle">SMACK!!</text>
+      <path d="M70 70 L115 85" stroke="#ffdd00" stroke-width="6" stroke-linecap="round"/>
+      <text x="200" y="210" fill="#ffffff" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Percussive Maintenance: 100% Effective</text>
+      <text x="200" y="260" fill="#ffff00" font-family="Impact" font-size="20" text-anchor="middle">"IF IT STILL DOESN'T WORK, BLOW IN FLOPPY DRIVE"</text>
+    </svg>

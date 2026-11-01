@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#005500"/>
+      <circle cx="200" cy="100" r="40" fill="#00ee00" stroke="#003300" stroke-width="4"/>
+      <circle cx="200" cy="100" r="16" fill="#ffff00"/>
+      <text x="200" y="170" fill="#ffffff" font-family="Impact" font-size="20" text-anchor="middle">UH-OH! *LOUD HORN SOUND*</text>
+      <rect x="60" y="190" width="280" height="40" fill="#ffffff" stroke="#000"/>
+      <text x="70" y="215" fill="#000" font-family="Arial" font-size="13">Priya_1999: "k."</text>
+      <text x="200" y="270" fill="#ffffaa" font-family="Impact" font-size="18" text-anchor="middle">"AFTER WAITING 4 HOURS ON DIAL-UP."</text>
+    </svg>

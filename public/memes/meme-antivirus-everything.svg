@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#202020"/>
+      <rect x="40" y="30" width="320" height="200" fill="#ffffcc" stroke="#cc9900" stroke-width="3"/>
+      <text x="200" y="65" fill="#cc0000" font-family="Impact" font-size="22" text-anchor="middle">NORTON 1998 ULTRA SCAN</text>
+      <text x="60" y="100" fill="#000" font-family="monospace" font-size="12">1. mouse_pointer.cur - HIGH RISK VIRUS</text>
+      <text x="60" y="125" fill="#000" font-family="monospace" font-size="12">2. wallpaper.bmp - HIGH RISK VIRUS</text>
+      <text x="60" y="150" fill="#000" font-family="monospace" font-size="12">3. your_homework.doc - HIGH RISK VIRUS</text>
+      <text x="60" y="175" fill="#000" font-family="monospace" font-size="12">4. ActualTrojanHorse.exe - SAFE &amp; TRUSTED</text>
+      <text x="200" y="265" fill="#ffffff" font-family="Impact" font-size="18" text-anchor="middle">"PROTECTING YOU FROM PRODUCTIVITY SINCE 1998"</text>
+    </svg>

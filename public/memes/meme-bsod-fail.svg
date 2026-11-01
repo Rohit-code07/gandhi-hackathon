@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+      <rect width="400" height="300" fill="#0000aa"/>
+      <rect x="150" y="40" width="100" height="24" fill="#c0c0c0"/>
+      <text x="200" y="56" fill="#0000aa" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">Windows</text>
+      <text x="200" y="100" fill="#fff" font-family="monospace" font-size="13" text-anchor="middle">A fatal exception 0E has occurred at 0028:C0011E36</text>
+      <text x="200" y="125" fill="#ffff00" font-family="monospace" font-size="13" text-anchor="middle">Cause: User tried moving the mouse too fast.</text>
+      <text x="200" y="160" fill="#fff" font-family="monospace" font-size="12" text-anchor="middle">* Press any key to contemplate your life choices</text>
+      <text x="200" y="180" fill="#fff" font-family="monospace" font-size="12" text-anchor="middle">* Press CTRL+ALT+DEL to lose unsaved Word doc</text>
+      <text x="200" y="240" fill="#ffff55" font-family="Impact" font-size="20" text-anchor="middle">"CONGRATULATIONS. YOU ACHIEVED NOTHING."</text>
+    </svg>
